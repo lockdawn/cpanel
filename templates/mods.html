@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<h3 class="stencil mb-3"><i class="fa-solid fa-boxes-stacked me-2"></i> MODS (Launcher style)</h3>
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card bg-secondary text-light">
+      <div class="card-body">
+        <h5 class="card-title">Importar Preset HTML</h5>
+        <input class="form-control form-control-sm mb-2" id="htmlFile" type="file" accept=".html">
+        <button class="btn btn-sm btn-olive" id="btnParse">Procesar HTML</button>
+        <form method="post" action="/mods/download" id="downloadForm" class="mt-3">
+          <input type="hidden" name="ids_text" id="ids_text">
+          <input type="hidden" name="names_json" id="names_json">
+          <button class="btn btn-success btn-sm" type="submit" id="btnDownload" disabled>Descargar / Actualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card bg-secondary text-light">
+      <div class="card-body">
+        <table class="table table-dark table-striped" id="modsTable">
+          <thead><tr><th>ID</th><th>Nombre</th></tr></thead>
+          <tbody><tr><td colspan="2">Cargar un HTML para comenzar.</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const $ = sel=>document.querySelector(sel);
+function extractFromLauncherHTML(txt){
+  const dom = new DOMParser().parseFromString(txt,"text/html");
+  const rows = dom.querySelectorAll('tr[data-type="ModContainer"]');
+  const mods=[];
+  rows.forEach(tr=>{
+    const nameCell=tr.querySelector('td[data-type="DisplayName"]');
+    const link=tr.querySelector('a[href*="filedetails"]');
+    if(!link) return;
+    try{
+      const u=new URL(link.getAttribute('href'),"https://steamcommunity.com");
+      const id=u.searchParams.get("id");
+      if(id) mods.push({id:id,name:(nameCell?.textContent||"").trim()});
+    }catch(e){}
+  });
+  return mods;
+}
+$("#btnParse").addEventListener("click",async()=>{
+  const f=$("#htmlFile").files[0];
+  if(!f){alert("Selecciona un HTML");return;}
+  const txt=await f.text();
+  const mods=extractFromLauncherHTML(txt);
+  const tbody=$("#modsTable tbody");
+  if(mods.length==0){tbody.innerHTML="<tr><td colspan=2>No se encontraron mods</td></tr>";return;}
+  let rows=""; let ids=[]; let map={};
+  mods.forEach(m=>{rows+=`<tr><td>${m.id}</td><td>${m.name}</td></tr>`;ids.push(m.id);map[m.id]=m.name;});
+  tbody.innerHTML=rows;
+  $("#ids_text").value=ids.join(",");
+  $("#names_json").value=JSON.stringify(map);
+  $("#btnDownload").disabled=false;
+});
+</script>
+{% endblock %}
