@@ -1,15 +1,15 @@
 /* Tactical / serious military theme */
 :root{
-  --ink:#050806;
-  --panel:#101711;
-  --panel-elevated:#1b251b;
-  --edge:#2d3f2b;
-  --text:#f2f5ee;
-  --muted:#c5cdbf;
-  --accent:#8fb76a;
-  --accent-soft:#a5c782;
-  --olive:#8fb76a;
-  --olive-strong:#73965b;
+  --ink:#0b0f0b;
+  --panel:#121712;
+  --panel-elevated:#1a221a;
+  --edge:#263326;
+  --text:#e8eee6;
+  --muted:#c1c9bd;
+  --accent:#8f9f68;
+  --accent-soft:#a6b87a;
+  --olive:#899a63;
+  --olive-strong:#6f8051;
   --warn:#d36262;
   --shadow:0 12px 28px rgba(0,0,0,.45);
 }
@@ -21,14 +21,16 @@ body{
   background-color:var(--ink);
   font-family:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height:1.55;
+  font-weight:400;
 }
 .stencil,
 h1,h2,h3,h4,h5,h6{
   font-family:"Stardos Stencil", "Inter", sans-serif;
   letter-spacing:1px;
   text-transform:uppercase;
+  color:var(--text);
 }
-.brand-text{font-family:"Stardos Stencil", "Inter", sans-serif; letter-spacing:2px}
+.brand-text{font-family:"Stardos Stencil", "Inter", sans-serif; letter-spacing:2px; color:var(--text)}
 a{color:var(--accent); text-decoration:none}
 a:hover{color:var(--accent-soft)}
 p,li{color:var(--text)}
@@ -55,13 +57,13 @@ label{color:var(--text)}
 .table-dark thead th{border-bottom-color:var(--edge)}
 
 /* Sidebar */
-.sidebar{width:260px; min-height:100vh; transition: width .2s ease; border-right:1px solid var(--edge)}
+.sidebar{width:260px; min-height:100vh; transition:width .25s ease; border-right:1px solid var(--edge)}
 .sidebar .sidebar-brand{color:var(--text); font-size:1.1rem}
-.sidebar .nav-link{color:var(--muted); border-radius:8px; padding:.55rem .75rem; display:flex; align-items:center; gap:.75rem; transition:background .2s ease, color .2s ease}
+.sidebar .nav-link{color:var(--muted); border-radius:8px; padding:.55rem .75rem; display:flex; align-items:center; gap:.75rem; transition:background .2s ease,color .2s ease}
 .sidebar .nav-link i{font-size:1.05rem; flex-shrink:0}
-.sidebar .nav-link .link-text{white-space:nowrap; transition:opacity .2s ease, max-width .2s ease; max-width:160px; overflow:hidden}
-.sidebar .nav-link:hover{background:#1a2118; color:var(--text)}
-.sidebar .nav-link.active{background:#1f2a1d; color:var(--text)}
+.sidebar .nav-link .link-text{white-space:nowrap; transition:opacity .2s ease,max-width .2s ease; max-width:160px; overflow:hidden}
+.sidebar .nav-link:hover{background:#1c241c; color:var(--text)}
+.sidebar .nav-link.active{background:#202a20; color:var(--text)}
 .sidebar.collapsed{width:80px}
 .sidebar.collapsed .sidebar-brand{justify-content:center}
 .sidebar.collapsed .sidebar-brand .brand-text{display:none}
@@ -70,9 +72,9 @@ label{color:var(--text)}
 .sidebar.collapsed .nav-link .link-text{opacity:0; max-width:0; margin:0}
 
 /* Topbar */
-.topbar{background:#0e120e; border-bottom:1px solid var(--edge)}
-.btn-sidebar{color:var(--text); border-color:var(--edge); background:rgba(0,0,0,0.25)}
-.btn-sidebar:hover{color:var(--text); border-color:var(--accent); background:rgba(143,183,106,0.2)}
+.topbar{background:#111611; border-bottom:1px solid var(--edge)}
+.btn-sidebar{color:var(--text); border-color:var(--edge); background:rgba(255,255,255,0.05)}
+.btn-sidebar:hover{color:var(--text); border-color:var(--accent); background:rgba(143,183,106,0.22)}
 .btn-sidebar:focus{box-shadow:0 0 0 .2rem rgba(143,183,106,0.35)}
 .user-label{font-weight:600}
 .dropdown-menu-dark{background-color:#121b12; border:1px solid var(--edge)}
