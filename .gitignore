@@ -416,3 +416,11 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Python virtual environment
+venv/
+
+# Archivos de logs opcionales
+logs/
+*.log
+
