@@ -3,80 +3,86 @@
 <div class="container-fluid">
   <div class="row g-3">
     <div class="col-12 col-lg-4">
-      <div class="card panel-card"><div class="card-body">
-        <h5 class="card-title stencil">ESTADO DE TEAM SPEAK</h5>
-        <div class="d-flex align-items-center gap-2 mb-2">
-          <span class="fw-semibold">Estado:</span>
-          <span class="badge {{ 'bg-success' if teamspeak.online else 'bg-danger' }}">
-            {{ 'En línea' if teamspeak.online else 'Fuera de línea' }}
-          </span>
+      <div class="panel-card h-100">
+        <div class="panel-card-body">
+          <h5 class="panel-title stencil">ESTADO DE TEAM SPEAK</h5>
+          <div class="status-line d-flex align-items-center gap-2 mb-3">
+            <span class="status-label">Estado</span>
+            <span class="status-pill {{ 'status-online' if teamspeak.online else 'status-offline' }}">
+              {{ 'En línea' if teamspeak.online else 'Fuera de línea' }}
+            </span>
+          </div>
+          <ul class="metric-list">
+            <li>Procesos detectados: {{ teamspeak.process_count }}</li>
+            <li>CPU combinada: {{ '%.2f' | format(teamspeak.total_cpu_percent) }}%</li>
+            <li>Memoria combinada: {{ teamspeak.total_memory_human }}</li>
+            <li>Tiempo activo: {{ teamspeak.uptime_human or 'N/D' }}</li>
+          </ul>
+          {% if teamspeak.processes %}
+          <div class="section-label">Procesos observados</div>
+          <ul class="metric-list subtle">
+            {% for proc in teamspeak.processes %}
+              <li>PID {{ proc.pid }} · {{ proc.cpu_percent }}% CPU · {{ proc.memory_human }} · {{ proc.uptime_human }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted mb-0">No se encontraron procesos relacionados con Team Speak.</p>
+          {% endif %}
         </div>
-        <ul class="mb-2">
-          <li>Procesos detectados: {{ teamspeak.process_count }}</li>
-          <li>CPU combinada: {{ '%.2f' | format(teamspeak.total_cpu_percent) }}%</li>
-          <li>Memoria combinada: {{ teamspeak.total_memory_human }}</li>
-          <li>Tiempo activo: {{ teamspeak.uptime_human or 'N/D' }}</li>
-        </ul>
-        {% if teamspeak.processes %}
-        <div class="small text-secondary">Procesos observados</div>
-        <ul class="small mb-0">
-          {% for proc in teamspeak.processes %}
-            <li>PID {{ proc.pid }} · {{ proc.cpu_percent }}% CPU · {{ proc.memory_human }} · {{ proc.uptime_human }}</li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p class="card-text text-secondary mb-0">No se encontraron procesos relacionados con Team Speak.</p>
-        {% endif %}
-      </div></div>
+      </div>
     </div>
     <div class="col-12 col-lg-4">
-      <div class="card panel-card"><div class="card-body">
-        <h5 class="card-title stencil">ESTADO DE ARMA 3 SV</h5>
-        <div class="d-flex align-items-center gap-2 mb-2">
-          <span class="fw-semibold">Estado:</span>
-          <span class="badge {{ 'bg-success' if arma3.online else 'bg-danger' }}">
-            {{ 'En línea' if arma3.online else 'Fuera de línea' }}
-          </span>
+      <div class="panel-card h-100">
+        <div class="panel-card-body">
+          <h5 class="panel-title stencil">ESTADO DE ARMA 3 SV</h5>
+          <div class="status-line d-flex align-items-center gap-2 mb-3">
+            <span class="status-label">Estado</span>
+            <span class="status-pill {{ 'status-online' if arma3.online else 'status-offline' }}">
+              {{ 'En línea' if arma3.online else 'Fuera de línea' }}
+            </span>
+          </div>
+          <ul class="metric-list">
+            <li>Procesos detectados: {{ arma3.process_count }}</li>
+            <li>CPU combinada: {{ '%.2f' | format(arma3.total_cpu_percent) }}%</li>
+            <li>Memoria combinada: {{ arma3.total_memory_human }}</li>
+            <li>Tiempo activo: {{ arma3.uptime_human or 'N/D' }}</li>
+          </ul>
+          {% if arma3.processes %}
+          <div class="section-label">Procesos observados</div>
+          <ul class="metric-list subtle">
+            {% for proc in arma3.processes %}
+              <li>PID {{ proc.pid }} · {{ proc.cpu_percent }}% CPU · {{ proc.memory_human }} · {{ proc.uptime_human }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="text-muted mb-0">No se encontraron procesos relacionados con Arma 3.</p>
+          {% endif %}
         </div>
-        <ul class="mb-2">
-          <li>Procesos detectados: {{ arma3.process_count }}</li>
-          <li>CPU combinada: {{ '%.2f' | format(arma3.total_cpu_percent) }}%</li>
-          <li>Memoria combinada: {{ arma3.total_memory_human }}</li>
-          <li>Tiempo activo: {{ arma3.uptime_human or 'N/D' }}</li>
-        </ul>
-        {% if arma3.processes %}
-        <div class="small text-secondary">Procesos observados</div>
-        <ul class="small mb-0">
-          {% for proc in arma3.processes %}
-            <li>PID {{ proc.pid }} · {{ proc.cpu_percent }}% CPU · {{ proc.memory_human }} · {{ proc.uptime_human }}</li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        <p class="card-text text-secondary mb-0">No se encontraron procesos relacionados con Arma 3.</p>
-        {% endif %}
-      </div></div>
+      </div>
     </div>
     <div class="col-12 col-lg-4">
-      <div class="card panel-card"><div class="card-body">
-        <h5 class="card-title stencil">ESTADO DE LA INSTANCIA</h5>
-        <ul class="mb-2">
-          <li>Uso de CPU: {{ '%.2f' | format(instance.cpu_percent) }}%</li>
-          <li>Uso de RAM: {{ '%.2f' | format(instance.memory_percent) }}% ({{ instance.memory_used_human }} / {{ instance.memory_total_human }})</li>
-        </ul>
-        <div class="small text-secondary">Almacenamiento</div>
-        <ul class="small mb-0">
-          {% for disk in instance.disks %}
-            <li>
-              {{ disk.label }}:
-              {% if disk.missing %}
-                <span class="text-danger">No detectado</span>
-              {% else %}
-                {{ disk.free_human }} libres de {{ disk.total_human }} ({{ '%.1f' | format(disk.percent) }}% usado)
-              {% endif %}
-            </li>
-          {% endfor %}
-        </ul>
-      </div></div>
+      <div class="panel-card h-100">
+        <div class="panel-card-body">
+          <h5 class="panel-title stencil">ESTADO DE LA INSTANCIA</h5>
+          <ul class="metric-list">
+            <li>Uso de CPU: {{ '%.2f' | format(instance.cpu_percent) }}%</li>
+            <li>Uso de RAM: {{ '%.2f' | format(instance.memory_percent) }}% ({{ instance.memory_used_human }} / {{ instance.memory_total_human }})</li>
+          </ul>
+          <div class="section-label">Almacenamiento</div>
+          <ul class="metric-list subtle">
+            {% for disk in instance.disks %}
+              <li>
+                {{ disk.label }}:
+                {% if disk.missing %}
+                  <span class="text-danger">No detectado</span>
+                {% else %}
+                  {{ disk.free_human }} libres de {{ disk.total_human }} ({{ '%.1f' | format(disk.percent) }}% usado)
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

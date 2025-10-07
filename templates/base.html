@@ -11,37 +11,42 @@
   <script src="https://kit.fontawesome.com/a2e0e6ad8f.js" crossorigin="anonymous"></script>
 </head>
 <body class="bg-camo">
-  <div class="d-flex">
-    <nav id="sidebar" class="sidebar bg-panel p-3 d-flex flex-column gap-3">
+  <div class="app-shell">
+    <nav id="sidebar" class="sidebar bg-panel p-3 d-flex flex-column" role="navigation" aria-label="Navegación principal">
       <div class="sidebar-brand d-flex align-items-center gap-2">
-        <i class="fa-solid fa-shield-halved"></i>
-        <span class="brand-text">CLANFEL</span>
+        <span class="brand-icon"><i class="fa-solid fa-shield-halved"></i></span>
+        <span class="label brand-text">CLANFEL</span>
       </div>
-      <div class="nav flex-column gap-1">
-        <a class="nav-link {% if request.url.path == '/home' %}active{% endif %}" href="/home">
-          <i class="fa-solid fa-house"></i>
-          <span class="link-text">Home</span>
-        </a>
-        <a class="nav-link {% if request.url.path.startswith('/mods') %}active{% endif %}" href="/mods">
-          <i class="fa-solid fa-boxes-stacked"></i>
-          <span class="link-text">Mods</span>
-        </a>
-        <a class="nav-link {% if request.url.path.startswith('/server') %}active{% endif %}" href="/server">
-          <i class="fa-solid fa-server"></i>
-          <span class="link-text">Server</span>
-        </a>
+      <div class="sidebar-nav flex-grow-1 d-flex flex-column">
+        <div class="nav flex-column gap-1">
+          <a class="nav-link {% if request.url.path == '/home' %}active{% endif %}" href="/home" {% if request.url.path == '/home' %}aria-current="page"{% endif %}>
+            <i class="fa-solid fa-house"></i>
+            <span class="label link-text">Home</span>
+          </a>
+          <a class="nav-link {% if request.url.path.startswith('/mods') %}active{% endif %}" href="/mods" {% if request.url.path.startswith('/mods') %}aria-current="page"{% endif %}>
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span class="label link-text">Mods</span>
+          </a>
+          <a class="nav-link {% if request.url.path.startswith('/server') %}active{% endif %}" href="/server" {% if request.url.path.startswith('/server') %}aria-current="page"{% endif %}>
+            <i class="fa-solid fa-server"></i>
+            <span class="label link-text">Server</span>
+          </a>
+        </div>
       </div>
     </nav>
 
-    <div class="flex-grow-1 d-flex flex-column">
+    <div class="main-panel flex-grow-1 d-flex flex-column">
       <header class="topbar d-flex align-items-center justify-content-between px-4 py-3 gap-3">
-        <button id="sidebarToggle" class="btn btn-outline-light btn-sidebar" type="button" aria-label="Alternar menú" aria-expanded="true">
-          <i class="fa-solid fa-bars"></i>
-        </button>
+        <div class="topbar-left d-flex align-items-center gap-3">
+          <button id="sidebarToggle" class="btn btn-sidebar" type="button" aria-label="Alternar menú" aria-expanded="true" aria-controls="sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="topbar-title stencil text-uppercase">Centro de mando</div>
+        </div>
         <div class="dropdown">
-          <button class="btn btn-dark dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-topbar dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa-solid fa-user-tie"></i>
-            <span class="user-label">{{ user.username if user else 'Operador' }}</span>
+            <span class="label user-label">{{ user.username if user else 'Operador' }}</span>
           </button>
           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
             <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-id-badge me-2"></i>Perfil</a></li>
@@ -51,7 +56,7 @@
         </div>
       </header>
 
-      <main class="flex-grow-1 p-4">
+      <main class="main-content flex-grow-1">
         {% block content %}{% endblock %}
       </main>
     </div>
@@ -66,24 +71,24 @@
 
       const collapsedClass = 'collapsed';
       const storageKey = 'sidebar-collapsed';
-      const storedState = localStorage.getItem(storageKey);
-      if (storedState === 'true') {
-        sidebar.classList.add(collapsedClass);
-      }
 
-      const updateAria = () => {
-        const isCollapsed = sidebar.classList.contains(collapsedClass);
+      const prefersCollapse = () => window.matchMedia('(max-width: 992px)').matches;
+
+      const applyState = (isCollapsed) => {
+        sidebar.classList.toggle(collapsedClass, isCollapsed);
+        document.body.classList.toggle('sidebar-collapsed', isCollapsed);
         toggleBtn.setAttribute('aria-expanded', (!isCollapsed).toString());
         toggleBtn.setAttribute('aria-label', isCollapsed ? 'Expandir menú lateral' : 'Colapsar menú lateral');
       };
 
-      updateAria();
+      const storedState = localStorage.getItem(storageKey);
+      const startCollapsed = storedState === '1' || (storedState === null && prefersCollapse());
+      applyState(startCollapsed);
 
       toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle(collapsedClass);
-        const isCollapsed = sidebar.classList.contains(collapsedClass);
-        localStorage.setItem(storageKey, isCollapsed);
-        updateAria();
+        const willCollapse = !sidebar.classList.contains(collapsedClass);
+        applyState(willCollapse);
+        localStorage.setItem(storageKey, willCollapse ? '1' : '0');
       });
     });
   </script>
