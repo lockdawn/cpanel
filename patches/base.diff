@@ -1,73 +1,101 @@
 diff --git a/templates/base.html b/templates/base.html
-index 3bc96cc2758178c29069b0f3933c7c1e4fb755c6..e14a5e2d2230da902f74c84ff3df887bb5fd95b8 100644
+index e14a5e2d2230da902f74c84ff3df887bb5fd95b8..771b5d70a38e420740399f9ccc024a72d0c5b30c 100644
 --- a/templates/base.html
 +++ b/templates/base.html
-@@ -1,19 +1,56 @@
--<!DOCTYPE html>
-+<!doctype html>
+@@ -1,56 +1,91 @@
+ <!doctype html>
  <html lang="es">
  <head>
--  <meta charset="UTF-8">
--  <meta name="viewport" content="width=device-width, initial-scale=1.0">
--  <title>ClanFEL Panel</title>
--  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-+  <meta charset="utf-8">
-+  <meta name="viewport" content="width=device-width, initial-scale=1">
-+  <title>{% block title %}ClanFEL Panel{% endblock %}</title>
-+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Stardos+Stencil:wght@700&display=swap" rel="stylesheet">
-+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-+  <link rel="stylesheet" href="/static/tactical.css">
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>{% block title %}ClanFEL Panel{% endblock %}</title>
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Stardos+Stencil:wght@700&display=swap" rel="stylesheet">
++  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Stardos+Stencil:wght@400;700&display=swap" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="/static/tactical.css">
    <script src="https://kit.fontawesome.com/a2e0e6ad8f.js" crossorigin="anonymous"></script>
--  <link rel="stylesheet" href="/static/custom.css">
  </head>
--<body class="bg-dark text-light">
--  <nav class="navbar navbar-dark bg-black px-3">
--    <a class="navbar-brand stencil" href="#">ClanFEL</a>
--  </nav>
--  <div class="container-fluid p-3">
--    {% block content %}{% endblock %}
-+<body class="bg-camo">
-+  <div class="d-flex">
-+    <nav id="sidebar" class="sidebar bg-panel p-3 d-flex flex-column gap-3">
-+      <div class="sidebar-brand d-flex align-items-center gap-2">
-+        <i class="fa-solid fa-shield-halved"></i>
-+        <span class="brand-text">CLANFEL</span>
-+      </div>
-+      <div class="nav flex-column gap-1">
-+        <a class="nav-link {% if request.url.path == '/home' %}active{% endif %}" href="/home">
-+          <i class="fa-solid fa-house me-2"></i> Home
-+        </a>
-+        <a class="nav-link {% if request.url.path.startswith('/mods') %}active{% endif %}" href="/mods">
-+          <i class="fa-solid fa-boxes-stacked me-2"></i> Mods
-+        </a>
-+        <a class="nav-link {% if request.url.path.startswith('/server') %}active{% endif %}" href="/server">
-+          <i class="fa-solid fa-server me-2"></i> Server
-+        </a>
-+      </div>
-+    </nav>
-+
-+    <div class="flex-grow-1 d-flex flex-column">
-+      <header class="topbar d-flex align-items-center justify-content-end px-4 py-3 gap-3">
-+        <div class="dropdown">
-+          <button class="btn btn-dark dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-+            <i class="fa-solid fa-user-tie"></i>
-+            <span class="user-label">{{ user.username if user else 'Operador' }}</span>
-+          </button>
-+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
-+            <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-id-badge me-2"></i>Perfil</a></li>
-+            <li><hr class="dropdown-divider"></li>
-+            <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Cerrar sesión</a></li>
-+          </ul>
-+        </div>
-+      </header>
-+
-+      <main class="flex-grow-1 p-4">
-+        {% block content %}{% endblock %}
-+      </main>
-+    </div>
+ <body class="bg-camo">
+   <div class="d-flex">
+     <nav id="sidebar" class="sidebar bg-panel p-3 d-flex flex-column gap-3">
+       <div class="sidebar-brand d-flex align-items-center gap-2">
+         <i class="fa-solid fa-shield-halved"></i>
+         <span class="brand-text">CLANFEL</span>
+       </div>
+       <div class="nav flex-column gap-1">
+         <a class="nav-link {% if request.url.path == '/home' %}active{% endif %}" href="/home">
+-          <i class="fa-solid fa-house me-2"></i> Home
++          <i class="fa-solid fa-house"></i>
++          <span class="link-text">Home</span>
+         </a>
+         <a class="nav-link {% if request.url.path.startswith('/mods') %}active{% endif %}" href="/mods">
+-          <i class="fa-solid fa-boxes-stacked me-2"></i> Mods
++          <i class="fa-solid fa-boxes-stacked"></i>
++          <span class="link-text">Mods</span>
+         </a>
+         <a class="nav-link {% if request.url.path.startswith('/server') %}active{% endif %}" href="/server">
+-          <i class="fa-solid fa-server me-2"></i> Server
++          <i class="fa-solid fa-server"></i>
++          <span class="link-text">Server</span>
+         </a>
+       </div>
+     </nav>
+ 
+     <div class="flex-grow-1 d-flex flex-column">
+-      <header class="topbar d-flex align-items-center justify-content-end px-4 py-3 gap-3">
++      <header class="topbar d-flex align-items-center justify-content-between px-4 py-3 gap-3">
++        <button id="sidebarToggle" class="btn btn-outline-light btn-sidebar" type="button" aria-label="Alternar menú" aria-expanded="true">
++          <i class="fa-solid fa-bars"></i>
++        </button>
+         <div class="dropdown">
+           <button class="btn btn-dark dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <i class="fa-solid fa-user-tie"></i>
+             <span class="user-label">{{ user.username if user else 'Operador' }}</span>
+           </button>
+           <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+             <li><a class="dropdown-item" href="/profile"><i class="fa-solid fa-id-badge me-2"></i>Perfil</a></li>
+             <li><hr class="dropdown-divider"></li>
+             <li><a class="dropdown-item" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Cerrar sesión</a></li>
+           </ul>
+         </div>
+       </header>
+ 
+       <main class="flex-grow-1 p-4">
+         {% block content %}{% endblock %}
+       </main>
+     </div>
    </div>
+ 
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
++  <script>
++    document.addEventListener('DOMContentLoaded', () => {
++      const sidebar = document.getElementById('sidebar');
++      const toggleBtn = document.getElementById('sidebarToggle');
++      if (!sidebar || !toggleBtn) return;
 +
-+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
++      const collapsedClass = 'collapsed';
++      const storageKey = 'sidebar-collapsed';
++      const storedState = localStorage.getItem(storageKey);
++      if (storedState === 'true') {
++        sidebar.classList.add(collapsedClass);
++      }
++
++      const updateAria = () => {
++        const isCollapsed = sidebar.classList.contains(collapsedClass);
++        toggleBtn.setAttribute('aria-expanded', (!isCollapsed).toString());
++        toggleBtn.setAttribute('aria-label', isCollapsed ? 'Expandir menú lateral' : 'Colapsar menú lateral');
++      };
++
++      updateAria();
++
++      toggleBtn.addEventListener('click', () => {
++        sidebar.classList.toggle(collapsedClass);
++        const isCollapsed = sidebar.classList.contains(collapsedClass);
++        localStorage.setItem(storageKey, isCollapsed);
++        updateAria();
++      });
++    });
++  </script>
  </body>
  </html>

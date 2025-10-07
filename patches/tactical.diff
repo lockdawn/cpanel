@@ -1,0 +1,117 @@
+diff --git a/static/tactical.css b/static/tactical.css
+index b75d877b3cb7ccb0fc8c81801c45ca1e7461fc14..731c0315d1cdcdd5aa711e0484a6365006103e75 100644
+--- a/static/tactical.css
++++ b/static/tactical.css
+@@ -1,55 +1,93 @@
+ /* Tactical / serious military theme */
+ :root{
+-  --ink:#0b0e0a;
+-  --panel:#111611;
+-  --edge:#273522;
+-  --text:#e6e9e3;
+-  --muted:#b9c1b0;
+-  --olive:#647a4f;
+-  --olive-strong:#4f6840;
+-  --accent:#95a67f;
+-  --warn:#b84a4a;
++  --ink:#050806;
++  --panel:#101711;
++  --panel-elevated:#1b251b;
++  --edge:#2d3f2b;
++  --text:#f2f5ee;
++  --muted:#c5cdbf;
++  --accent:#8fb76a;
++  --accent-soft:#a5c782;
++  --olive:#8fb76a;
++  --olive-strong:#73965b;
++  --warn:#d36262;
+   --shadow:0 12px 28px rgba(0,0,0,.45);
+ }
+ *{box-sizing:border-box}
+ html,body{height:100%}
+-body{margin:0;color:var(--text);font-family:Roboto,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+-.stencil{font-family:"Stardos Stencil", Roboto, sans-serif; letter-spacing:1px}
+-.brand-text{font-family:"Stardos Stencil", Roboto, sans-serif; letter-spacing:2px}
++body{
++  margin:0;
++  color:var(--text);
++  background-color:var(--ink);
++  font-family:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
++  line-height:1.55;
++}
++.stencil,
++h1,h2,h3,h4,h5,h6{
++  font-family:"Stardos Stencil", "Inter", sans-serif;
++  letter-spacing:1px;
++  text-transform:uppercase;
++}
++.brand-text{font-family:"Stardos Stencil", "Inter", sans-serif; letter-spacing:2px}
++a{color:var(--accent); text-decoration:none}
++a:hover{color:var(--accent-soft)}
++p,li{color:var(--text)}
++label{color:var(--text)}
++.form-control{background:#0f150f; border:1px solid var(--edge); color:var(--text)}
++.form-control::placeholder{color:var(--muted)}
++.form-control:focus{background:#151f15; border-color:var(--accent); color:var(--text); box-shadow:0 0 0 .2rem rgba(143,183,106,0.2)}
+ 
+ /* Camo background */
+ .bg-camo{
+   background:
+     radial-gradient(1300px 600px at -10% -10%, #182116 0%, rgba(24,33,22,0) 60%),
+     radial-gradient(1300px 600px at 110% 110%, #151d14 0%, rgba(21,29,20,0) 60%),
+     linear-gradient(180deg, #0c0f0c, #0a0d0a 60%, #0b100b);
+ }
+ 
+ /* Panels */
+ .bg-panel{background:var(--panel); border-right:1px solid var(--edge)}
+-.panel-card{background:var(--panel)!important; border:1px solid var(--edge)!important; border-radius:14px; box-shadow:var(--shadow)}
++.panel-card{background:var(--panel-elevated)!important; border:1px solid var(--edge)!important; border-radius:14px; box-shadow:var(--shadow)}
++.card{background:var(--panel-elevated); border:1px solid var(--edge); color:var(--text)}
++.card .card-title{color:var(--text)}
++.table-dark{--bs-table-bg:#111811; --bs-table-striped-bg:#162016; --bs-table-hover-bg:#1b281b; color:var(--text)}
++.table-dark th,.table-dark td{border-color:var(--edge); color:var(--text)}
++.table-dark thead th{border-bottom-color:var(--edge)}
+ 
+ /* Sidebar */
+-.sidebar{width:260px; min-height:100vh; transition: width .2s ease}
+-.sidebar.collapsed{width:78px}
+-.sidebar .nav-link{color:var(--muted); border-radius:8px; padding:.55rem .7rem}
+-.sidebar .nav-link.active{background:#1a2118; color:#fff}
+-.sidebar .sidebar-brand .brand-text{font-size:1.05rem}
++.sidebar{width:260px; min-height:100vh; transition: width .2s ease; border-right:1px solid var(--edge)}
++.sidebar .sidebar-brand{color:var(--text); font-size:1.1rem}
++.sidebar .nav-link{color:var(--muted); border-radius:8px; padding:.55rem .75rem; display:flex; align-items:center; gap:.75rem; transition:background .2s ease, color .2s ease}
++.sidebar .nav-link i{font-size:1.05rem; flex-shrink:0}
++.sidebar .nav-link .link-text{white-space:nowrap; transition:opacity .2s ease, max-width .2s ease; max-width:160px; overflow:hidden}
++.sidebar .nav-link:hover{background:#1a2118; color:var(--text)}
++.sidebar .nav-link.active{background:#1f2a1d; color:var(--text)}
++.sidebar.collapsed{width:80px}
++.sidebar.collapsed .sidebar-brand{justify-content:center}
++.sidebar.collapsed .sidebar-brand .brand-text{display:none}
++.sidebar.collapsed .nav-link{justify-content:center; padding:.55rem 0; gap:0}
++.sidebar.collapsed .nav-link i{margin:0}
++.sidebar.collapsed .nav-link .link-text{opacity:0; max-width:0; margin:0}
+ 
+ /* Topbar */
+ .topbar{background:#0e120e; border-bottom:1px solid var(--edge)}
++.btn-sidebar{color:var(--text); border-color:var(--edge); background:rgba(0,0,0,0.25)}
++.btn-sidebar:hover{color:var(--text); border-color:var(--accent); background:rgba(143,183,106,0.2)}
++.btn-sidebar:focus{box-shadow:0 0 0 .2rem rgba(143,183,106,0.35)}
+ .user-label{font-weight:600}
++.dropdown-menu-dark{background-color:#121b12; border:1px solid var(--edge)}
++.dropdown-menu-dark .dropdown-item{color:var(--muted)}
++.dropdown-menu-dark .dropdown-item:hover{background:#1f2a1d; color:var(--text)}
+ 
+ /* Login */
+ .login-bg{display:flex; align-items:center; justify-content:center; min-height:100vh}
+ .login-wrap{width:100%; max-width:480px; padding:1.25rem}
+ .login-card{background:var(--panel); border:1px solid var(--edge); border-radius:14px; padding:1.25rem; box-shadow:var(--shadow)}
+ .login-card .badge{display:inline-block; background:#1c2617; border:1px solid #2b3d26; color:#d7dec9; padding:.25rem .5rem; border-radius:6px}
+ .title{margin:.25rem 0 .25rem 0}
+ .subtitle{opacity:.8; margin-bottom:1rem}
+ .btn-olive{background:var(--olive); color:#111; border:0}
+ .btn-olive:hover{background:var(--olive-strong)}
+ 
+ /* Utility */
+ code{color:#cfe3c3}
+-.table-dark{--bs-table-bg: #0e120e; --bs-table-striped-bg:#121612}
