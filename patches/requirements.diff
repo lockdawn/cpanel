@@ -1,0 +1,18 @@
+diff --git a/requirements.txt b/requirements.txt
+index 1dd9b0ced7cfe6464e38f91cc657869d01bd9c7f..0f7efb204fe11dda2f47e9124dd1a017ebe7d252 100644
+--- a/requirements.txt
++++ b/requirements.txt
+@@ -1,6 +1,7 @@
+-fastapi
+-uvicorn[standard]
+-jinja2
+-python-multipart
+-passlib[argon2]
+-pydantic
++fastapi
++uvicorn[standard]
++jinja2
++python-multipart
++passlib[argon2]
++pydantic
++psutil
